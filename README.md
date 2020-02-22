@@ -3,7 +3,7 @@ Example CAN Code for the Espressif ESP32.
 
 API documentation can be found at https://docs.espressif.com/projects/esp-idf/en/latest/api-reference/peripherals/can.html
 
-The code currently sends a four byte frame containing an incrementing UINT32 value. It continues to send these inremental frames as fast as the CANbus permits. 
+The code currently sends a four byte frame containing an incrementing UINT32 value. It continues to send these incremental frames as fast as the CANbus permits. 
 
 # GPIO & Transceiver
 The ESP32 requires an external CAN transceiver. I would recommend the use of the SN65HVD230.
