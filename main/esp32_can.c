@@ -62,5 +62,5 @@ void app_main(void)
     
 	//Stop and uninstall CAN driver
 	ESP_ERROR_CHECK(can_stop());  
-    ESP_ERROR_CHECK(can_driver_uninstall());
+	ESP_ERROR_CHECK(can_driver_uninstall());
 }
