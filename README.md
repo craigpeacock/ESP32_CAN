@@ -6,9 +6,9 @@ API documentation can be found at https://docs.espressif.com/projects/esp-idf/en
 The code currently sends a four byte frame containing an incrementing UINT32 value. It continues to send these inremental frames as fast as the CANbus permits. 
 
 # GPIO & Transceiver
-The ESP32 requires an external CAN transceiver. I use the SN65HVD230.
+The ESP32 requires an external CAN transceiver. I would recommend the use of the SN65HVD230.
 
-CTX should be connected to GPIO21 (defined by TX_GPIO_NUM)
-CRX should be connected to GPIO22 (defined by RX_GPIO_NUM)
+* CTX should be connected to GPIO21 (defined by TX_GPIO_NUM)
+* CRX should be connected to GPIO22 (defined by RX_GPIO_NUM)
 
 
