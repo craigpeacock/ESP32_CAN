@@ -24,24 +24,40 @@ static const can_general_config_t g_config = CAN_GENERAL_CONFIG_DEFAULT(TX_GPIO_
 
 void app_main(void)
 {
+	uint32_t alerts_triggered;
+	uint32_t i = 0;
+	
     printf("ESP32 CAN Demo\n");
     
     //Install and start CAN driver
     ESP_ERROR_CHECK(can_driver_install(&g_config, &t_config, &f_config));
     ESP_ERROR_CHECK(can_start());
+    ESP_ERROR_CHECK(can_reconfigure_alerts(CAN_ALERT_TX_IDLE,NULL));
     
-    for (int i = 0; i < 10; i++) {
-    	printf("Sending frame %d\n",i);
-        can_message_t message;
-        message.identifier = 0x555;
-        message.data_length_code = 4;
-        message.data[0] = 1;
-        message.data[1] = 2;
-        message.data[2] = 3;
-        message.data[3] = 4;
-        ESP_ERROR_CHECK(can_transmit(&message, portMAX_DELAY));
-        
-        vTaskDelay(1);
+	printf("Sending frame %d\n",i);
+	can_message_t message;
+	message.identifier = 0x555;
+	message.data_length_code = 4;
+	message.data[0] = i & 0xFF;
+	message.data[1] = (i & 0xFF00) >> 8;
+	message.data[2] = (i & 0xFF0000) >> 16;
+	message.data[3] = (i & 0xFF000000) >> 24;
+	ESP_ERROR_CHECK(can_transmit(&message, portMAX_DELAY));
+    
+	while (1){
+    	can_read_alerts(&alerts_triggered, portMAX_DELAY);
+    	if (alerts_triggered & CAN_ALERT_TX_IDLE) {
+			//printf("Sending frame %d\n",i);
+			can_message_t message;
+			message.identifier = 0x555;
+			message.data_length_code = 4;
+			message.data[0] = i & 0xFF;
+			message.data[1] = (i & 0xFF00) >> 8;
+			message.data[2] = (i & 0xFF0000) >> 16;
+			message.data[3] = (i & 0xFF000000) >> 24;
+			i++;
+			ESP_ERROR_CHECK(can_transmit(&message, portMAX_DELAY));
+    	}
     }
     
     //Stop and uninstall CAN driver
