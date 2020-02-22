@@ -27,12 +27,12 @@ void app_main(void)
 	uint32_t alerts_triggered;
 	uint32_t i = 0;
 	
-    printf("ESP32 CAN Demo\n");
+	printf("ESP32 CAN Demo\n");
     
-    //Install and start CAN driver
-    ESP_ERROR_CHECK(can_driver_install(&g_config, &t_config, &f_config));
-    ESP_ERROR_CHECK(can_start());
-    ESP_ERROR_CHECK(can_reconfigure_alerts(CAN_ALERT_TX_IDLE,NULL));
+	//Install and start CAN driver
+	ESP_ERROR_CHECK(can_driver_install(&g_config, &t_config, &f_config));
+	ESP_ERROR_CHECK(can_start());
+	ESP_ERROR_CHECK(can_reconfigure_alerts(CAN_ALERT_TX_IDLE,NULL));
     
 	printf("Sending frame %d\n",i);
 	can_message_t message;
@@ -58,9 +58,9 @@ void app_main(void)
 			i++;
 			ESP_ERROR_CHECK(can_transmit(&message, portMAX_DELAY));
     	}
-    }
+	}
     
-    //Stop and uninstall CAN driver
-    ESP_ERROR_CHECK(can_stop());  
+	//Stop and uninstall CAN driver
+	ESP_ERROR_CHECK(can_stop());  
     ESP_ERROR_CHECK(can_driver_uninstall());
 }
